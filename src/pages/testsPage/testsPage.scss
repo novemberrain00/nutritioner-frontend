@@ -1,0 +1,26 @@
+.tests {
+    &__header {
+        margin-top: 24px;   
+    }
+
+    &__title {
+        font-size: 32px !important;
+        margin-top: 0;    
+    }
+
+    &__test {
+        margin-bottom: 32px;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__warning {
+        color: #ff0000;
+
+        &_hidden {
+            opacity: 0;
+        }
+    }
+}

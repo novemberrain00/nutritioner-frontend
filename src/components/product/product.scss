@@ -1,0 +1,57 @@
+@import '../../global-variables.scss';
+
+.product {
+    width: 220px;
+    box-shadow: 0px 0px 20px -10px;
+    margin-bottom: 30px;
+    margin-right: 30px;
+
+    &__header {
+        background-color: $main-color-green;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+        padding: 10px;
+        font-weight: 500;
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        &-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__picture {
+        &-img {
+            width: 100%;    
+        }
+    }
+
+    &__showmore {
+        display: block;
+        width: max-content;
+        margin: 0 auto;
+        color: #000;
+        text-decoration: underline;
+    }
+
+    &__footer {
+        padding: 10px;
+        background-color: $main-color-green;
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
+}

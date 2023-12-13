@@ -8,10 +8,18 @@ import Overlay from '../../components/overlay/overlay';
 import Product from '../../components/product/product';
 import ProductModal from '../../components/productModal/productModal';
 
+import {DailyDietI, ProductI} from '../../interfaces/interfaces';
+
 import './nutritionPage.scss';
+import MealComponent from '../../components/mealComponent/mealComponent';
 
 const NutritionPage: FC = () => {
-    const [breakfast, setBreakfast] = useState([]);
+    const [dailyDiet, setDailyDiet] = useState<DailyDietI>({
+        breakfast: [],
+        dinner: [],
+        afternoon: [],
+        lunch: []
+    });
     const {title, imgPath, description} = useSelector(activeProductData);
 
     const weight = +(sessionStorage.getItem('weight') as string),
@@ -42,53 +50,32 @@ const NutritionPage: FC = () => {
     }
 
     const calsNorm = sex === 'male' ? 
-        (10*weight + 6.25*height - 5*age + 5) * a : 
-        (10*weight + 6.25*height - 5*age - 161) * a;
+        Math.floor((10*weight + 6.25*height - 5*age + 5) * a) : 
+        Math.floor((10*weight + 6.25*height - 5*age - 161) * a);
 
-    const proteinsNorm = calsNorm*0.3,
-        fatsNorm = calsNorm*0.3,
-        carbsNorm = calsNorm*0.4;
+    const proteinsNorm = Math.floor(calsNorm * 0.3),
+        fatsNorm = Math.floor(calsNorm * 0.3),
+        carbsNorm = Math.floor(calsNorm * 0.4);
 
-    const calsForBreakfast = sex === 'male' ? 0.35 * calsNorm : 0.3 * calsNorm,
-        calsForDinner = sex === 'male' ? 0.5 * calsNorm : 0.45 * calsNorm,
-        calsForLunch = sex === 'male' ? 0.15 * calsNorm : 0.25 * calsNorm;
-
-    useEffect(() => {                                           
-        fetch(`http://localhost:4000/product/all`)
-        .then(response =>response.json())
-        .then(response => {
-            setBreakfast(response);
-        })
-    }, []);
-
+    const calsForMeals = {
+        breakfast: sex === 'male' ? 0.25 * calsNorm : 0.2 * calsNorm,
+        dinner: sex === 'male' ? 0.6 * calsNorm : 0.55 * calsNorm,
+        lunch: sex === 'male' ? 0.15 * calsNorm : 0.2 * calsNorm
+    }
+    
     return (
         <>
             <RootPage>
                 <div className="container">
-                    норма каллорий: {calsNorm}
+                    {/* норма каллорий: {calsNorm}
                     норма белков: {proteinsNorm}
                     норма жиров: {fatsNorm}
-                    норма углеводов: {carbsNorm}
+                    норма углеводов: {carbsNorm} */}
                     <h1 className="title title_black">Ваш рацион питания день:</h1>
                     <div className="day">
-                        <div className="day__reception">
-                            <h3 className="title title_black title_tiny day__reception-title">Завтрак</h3>
-                        </div>
-                        <div className="day__items">
-                            <Product/>
-                            <Product/>
-                            <Product/>
-                            <Product/>
-                            <Product/>
-                            <Product/>
-                            <Product/>
-                        </div>
-                        <div className="day__reception">
-                            <h3 className="title title_black title_tiny day__reception-title">Обед</h3>
-                        </div>
-                        <div className="day__reception">
-                            <h3 className="title title_black title_tiny day__reception-title">Ужин</h3>
-                        </div>
+                        <MealComponent title='Завтрак' meal='breakfast' cals={calsForMeals.breakfast}/>
+                        <MealComponent title='Обед' meal='lunch' cals={calsForMeals.lunch}/>
+                        <MealComponent title='Ужин' meal='dinner' cals={calsForMeals.dinner}/>
                     </div>
                 </div>
             </RootPage>

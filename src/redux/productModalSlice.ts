@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit'
-import type {PayloadAction} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit';
+import {PayloadAction} from '../interfaces/interfaces';
 import type {RootState} from '../store';
 
 interface ActiveProdiuctI {
@@ -24,7 +24,7 @@ export const productModalSlice = createSlice({
   name: 'productModal',
   initialState,
   reducers: {
-    setProductData: (state, action) => {
+    setProductData: (state:ProductModalState, action: PayloadAction<ActiveProdiuctI>) => {
         state.activeProductData = {
             ...action.payload
         }

@@ -14,7 +14,7 @@ export const overlaySlice = createSlice({
   name: 'overlay',
   initialState,
   reducers: {
-    changeVisibility: (state) => {
+    changeVisibility: (state: OverlayState) => {
         state.isShowed = !state.isShowed
     }
   },
